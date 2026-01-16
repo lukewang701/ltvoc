@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>B3L9 Mazu Mania</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #fd79a8 100%);
+        height: 100vh; /* Fallback */
+        height: 100svh; /* Use Small Viewport Height to avoid URL bar issues */
+        overflow: hidden; /* Prevent body scroll, handle in app container */
+        margin: 0;
+        padding: 0;
+        touch-action: manipulation; /* Improve touch response */
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Custom animations */
+      @keyframes bounce {
+        0%, 20%, 60%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        80% { transform: translateY(-5px); }
+      }
+      .animate-bounce-custom {
+        animation: bounce 0.5s ease-in-out;
+      }
+
+      /* Carousel Animations - Slowed down to 1.2s */
+      @keyframes slideInRight {
+        from { transform: translateX(50px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideInLeft {
+        from { transform: translateX(-50px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      .animate-slide-right {
+        animation: slideInRight 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      .animate-slide-left {
+        animation: slideInLeft 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+
+      /* Dice Jump Animation - Jump Height -300%, Duration 2.5s */
+      @keyframes diceJump {
+        0% { transform: translate(-50%, 50%) scale(0.5) rotate(0deg); opacity: 0; }
+        40% { transform: translate(-50%, -300%) scale(1.5) rotate(180deg); opacity: 1; }
+        80% { transform: translate(-50%, -250%) scale(1.2) rotate(360deg); opacity: 1; }
+        100% { transform: translate(-50%, -250%) scale(1.2) rotate(360deg); opacity: 0; }
+      }
+      .animate-dice-jump {
+        animation: diceJump 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      }
+
+      /* Updated Finger Animation: Points UP and taps */
+      @keyframes fingerTap {
+        0%, 100% { transform: translateY(0) scale(1) translateX(-50%); opacity: 0.8; }
+        50% { transform: translateY(-10px) scale(1.1) translateX(-50%); opacity: 1; }
+      }
+      .finger-animation {
+        animation: fingerTap 1.5s ease-in-out infinite;
+      }
+
+      @keyframes techGlow {
+        0% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1); }
+        100% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), inset 0 0 25px rgba(255, 255, 255, 0.2); }
+      }
+      .tech-orb-glow {
+        animation: techGlow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes techGlowRed {
+        0% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1); }
+        100% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.8), inset 0 0 25px rgba(255, 255, 255, 0.2); }
+      }
+      .tech-orb-glow-red {
+        animation: techGlowRed 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes flashScore {
+        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        20% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+        40% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+        60% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        80% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+        100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+      }
+      .animate-flash-score {
+        animation: flashScore 2s ease-in-out forwards;
+      }
+
+      /* You Rock Text Animation */
+      @keyframes rockPulse {
+        0% { transform: scale(1) rotate(-5deg); text-shadow: 4px 4px 0px #000; }
+        50% { transform: scale(1.1) rotate(5deg); text-shadow: 8px 8px 0px #000; }
+        100% { transform: scale(1) rotate(-5deg); text-shadow: 4px 4px 0px #000; }
+      }
+      .animate-rock {
+        font-family: 'Bangers', cursive;
+        animation: rockPulse 0.8s infinite ease-in-out;
+      }
+
+      /* Countdown Bar Animation */
+      @keyframes countdown {
+        from { width: 100%; }
+        to { width: 0%; }
+      }
+      .animate-countdown {
+        animation: countdown 10s linear forwards;
+      }
+
+      /* Shake Animation for Error */
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+      }
+      .animate-shake {
+        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+      }
+
+      /* Flash Text Animation */
+      @keyframes flashText {
+        0%, 100% { opacity: 1; color: #15803d; }
+        50% { opacity: 0.5; color: #4ade80; }
+      }
+      .animate-flash-text {
+        animation: flashText 1.5s ease-in-out infinite;
+      }
+
+      /* Fade In Animation */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      .marshmallow-bg {
+        background: radial-gradient(circle at 30% 30%, #ffffff 0%, #f8f9fa 40%, #e9ecef 100%);
+      }
+      
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.2",
+    "vite": "https://aistudiocdn.com/vite@^7.2.7",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
